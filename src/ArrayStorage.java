@@ -21,20 +21,20 @@ public class ArrayStorage {
 
     Resume get(String uuid) {
         int tempCounter = 0;
-        while (!(storage[tempCounter] == null || storage[tempCounter].uuid.equals(uuid))) {
+        while (tempCounter < counter) {
+            if (storage[tempCounter].uuid.equals(uuid)) {
+                return storage[tempCounter];
+            }
             tempCounter++;
         }
-        return storage[tempCounter];
+        return null;
     }
 
     void delete(String uuid) {
         int tempCounter = 0;
-        while(true) {
-            if (storage[tempCounter] == null) {
-                break;
-            }
+        while (tempCounter < counter) {
             if (storage[tempCounter].uuid.equals(uuid)) {
-                while (storage[tempCounter] != null) {
+                while (tempCounter < counter) {
                     storage[tempCounter] = storage[tempCounter + 1];
                     tempCounter++;
                 }
