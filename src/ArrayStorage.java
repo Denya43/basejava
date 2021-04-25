@@ -13,9 +13,27 @@ public class ArrayStorage {
     }
 
     void save(Resume r) {
-        if (r != null) {
+        if (counter < storage.length && r != null) {
             storage[counter] = r;
             counter++;
+        } else if (r != null) {
+            System.out.println("Сохраняемое резюме не заполнено");
+        } else {
+            System.out.println("Хранилище резюме переполнено");
+        }
+    }
+
+    void update(Resume resume) {
+        int tempCounter = 0;
+        while (tempCounter < counter) {
+            if (storage[tempCounter].uuid.equals(resume.uuid)) {
+                storage[tempCounter] = resume;
+                break;
+            }
+            tempCounter++;
+        }
+        if (tempCounter >= counter) {
+            System.out.println("Ошибка обновления! Не найдено резюме с uuid = " + resume.uuid);
         }
     }
 
@@ -27,6 +45,7 @@ public class ArrayStorage {
             }
             tempCounter++;
         }
+        System.out.println("Не найдено резюме с uuid = " + uuid);
         return null;
     }
 
@@ -41,6 +60,9 @@ public class ArrayStorage {
                 counter--;
                 break;
             }
+        }
+        if (tempCounter >= counter) {
+            System.out.println("Не найдено резюме с uuid " + uuid);
         }
     }
 
