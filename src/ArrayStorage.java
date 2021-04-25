@@ -53,10 +53,8 @@ public class ArrayStorage {
         int tempCounter = 0;
         while (tempCounter < counter) {
             if (storage[tempCounter].uuid.equals(uuid)) {
-                while (tempCounter < counter) {
-                    storage[tempCounter] = storage[tempCounter + 1];
-                    tempCounter++;
-                }
+                storage[tempCounter] = storage[counter - 1];
+                storage[counter - 1] = null;
                 counter--;
                 break;
             }
