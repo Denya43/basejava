@@ -17,38 +17,39 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (findResumePositionByUuid(resume.uuid) == null) {
+        if (size >= 10_000) {
+            System.out.println("База резюме переполнения");
+        } else if (findResumeIndex(resume.getUuid()) != -1) {
+            System.out.println("Резюме с uuid " + resume.getUuid() + " уже содержится в базе");
+        }
+        else {
             storage[size] = resume;
             size++;
-        } else {
-            System.out.println("Резюме с uuid " + resume.uuid + " уже содержится в базе");
         }
     }
 
     public void update(Resume resume) {
-        Integer tempCounter = findResumePositionByUuid(resume.uuid);
-        if (tempCounter != null) {
-            storage[tempCounter] = resume;
-        }
-        else {
-            System.out.println("Ошибка обновления! Не найдено резюме с uuid = " + resume.uuid);
+        int index = findResumeIndex(resume.getUuid());
+        if (index != -1) {
+            storage[index] = resume;
+        } else {
+            System.out.println("Ошибка обновления! Не найдено резюме с uuid = " + resume.getUuid());
         }
     }
 
     public Resume get(String uuid) {
-        Integer tempCounter = findResumePositionByUuid(uuid);
-        if (tempCounter != null) {
-            return storage[tempCounter];
-        } else {
-            System.out.println("Не найдено резюме с uuid " + uuid);
+        int index = findResumeIndex(uuid);
+        if (index != -1) {
+            return storage[index];
         }
+        System.out.println("Не найдено резюме с uuid " + uuid);
         return null;
     }
 
     public void delete(String uuid) {
-        Integer tempCounter = findResumePositionByUuid(uuid);
-        if (tempCounter != null) {
-            storage[tempCounter] = storage[size - 1];
+        int index = findResumeIndex(uuid);
+        if (index != -1) {
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
         } else {
             System.out.println("Не найдено резюме с uuid " + uuid);
@@ -66,12 +67,12 @@ public class ArrayStorage {
         return size;
     }
 
-    private Integer findResumePositionByUuid(String uuid) {
+    private int findResumeIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid.equals(uuid)) {
+            if (storage[i].getUuid().equals(uuid)) {
                 return i;
             }
         }
-        return null;
+        return -1;
     }
 }
