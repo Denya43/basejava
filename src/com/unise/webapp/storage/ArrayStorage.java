@@ -17,12 +17,11 @@ public class ArrayStorage {
     }
 
     public void save(Resume resume) {
-        if (size >= 10_000) {
+        if (size >= storage.length) {
             System.out.println("База резюме переполнения");
         } else if (findResumeIndex(resume.getUuid()) != -1) {
             System.out.println("Резюме с uuid " + resume.getUuid() + " уже содержится в базе");
-        }
-        else {
+        } else {
             storage[size] = resume;
             size++;
         }
