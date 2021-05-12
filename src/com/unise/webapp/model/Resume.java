@@ -8,12 +8,12 @@ public class Resume {
     // Unique identifier
     private String uuid;
 
-    @Override
-    public String toString() {
+    public String getUuid() {
         return uuid;
     }
 
-    public String getUuid() {
+    @Override
+    public String toString() {
         return uuid;
     }
 }
